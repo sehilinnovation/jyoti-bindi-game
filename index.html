@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Jyoti Bindi – Win a Gift!</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Raleway:wght@400;600;700&family=Share+Tech+Mono&display=swap');
+
+    :root {
+      --yellow: #d4b800;
+      --yellow2: #f0d400;
+      --yellow-glow: rgba(212,184,0,0.5);
+      --red: #c01010;
+      --red2: #e02020;
+      --bg: #0a0800;
+      --card: #160e00;
+      --border: #2a1e00;
+      --text: #fff8e0;
+      --muted: #8a7430;
+      --green: #80ffb0;
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: 'Raleway', sans-serif;
+      min-height: 100vh; min-height: 100dvh;
+      display: flex; flex-direction: column; align-items: center;
+      padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0) env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
+      overflow-x: hidden;
+    }
+
+    .top-bar {
+      width: 100%; height: 4px;
+      background: linear-gradient(90deg, transparent, var(--red), var(--yellow2), var(--red), transparent);
+      box-shadow: 0 0 16px rgba(212,184,0,.5);
+    }
+
+    /* ── HEADER ── */
+    .header {
+      width: 100%; max-width: 480px;
+      display: flex; flex-direction: column; align-items: center;
+      padding: 22px 20px 14px; text-align: center;
+    }
+
+    .logo-wrap {
+      width: 90px; height: 90px;
+      background: var(--yellow);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 12px;
+      box-shadow: 0 0 0 3px rgba(212,184,0,.25), 0 8px 32px rgba(212,184,0,.3);
+      overflow: hidden;
+    }
+    .logo-wrap img { width: 84px; height: 84px; object-fit: contain; }
+
+    h1 {
+      font-family: 'Cinzel', serif; font-size: 1.55rem; font-weight: 900;
+      letter-spacing: .06em; line-height: 1.1;
+      background: linear-gradient(180deg, #fff8e0 0%, var(--yellow2) 50%, var(--yellow) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: 3px;
+    }
+
+    .sub-brand {
+      font-size: .62rem; color: rgba(212,184,0,.6); letter-spacing: .2em;
+      text-transform: uppercase; margin-bottom: 10px;
+    }
+
+    .address-pill {
+      background: rgba(212,184,0,.08); border: 1px solid rgba(212,184,0,.18);
+      border-radius: 20px; padding: 5px 14px;
+      font-size: .65rem; color: var(--muted); letter-spacing: .04em;
+    }
+
+    /* ── SCREENS ── */
+    .screen { width: 100%; max-width: 480px; padding: 0 16px; display: none; }
+    .screen.active { display: flex; flex-direction: column; }
+
+    /* ── REG SCREEN ── */
+    .reg-card {
+      background: var(--card); border: 1px solid rgba(212,184,0,.12);
+      border-top: 3px solid var(--yellow);
+      border-radius: var(--radius); padding: 28px 22px; margin-top: 10px;
+    }
+    .reg-title { font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }
+    .reg-desc  { font-size: .75rem; color: var(--muted); line-height: 1.6; margin-bottom: 22px; }
+
+    .field-label { font-size: .65rem; text-transform: uppercase; letter-spacing: .15em; color: var(--muted); margin-bottom: 7px; display: block; }
+    .field-input {
+      width: 100%; background: #0e0900; border: 1px solid var(--border);
+      border-radius: 10px; color: var(--text);
+      font-family: 'Raleway', sans-serif; font-size: 1rem; font-weight: 600;
+      padding: 13px 16px; outline: none; transition: border-color .2s; margin-bottom: 16px;
+    }
+    .field-input:focus { border-color: var(--yellow); }
+
+    .submit-btn {
+      width: 100%; padding: 16px; border: none; border-radius: var(--radius);
+      background: linear-gradient(135deg, var(--yellow2), #a08800);
+      color: #0a0800; font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 900;
+      letter-spacing: .06em; cursor: pointer; margin-top: 4px;
+      box-shadow: 0 6px 24px var(--yellow-glow); transition: transform .08s;
+    }
+    .submit-btn:active { transform: scale(.97); }
+    .submit-status { text-align: center; font-size: .78rem; margin-top: 10px; min-height: 18px; }
+    .submit-status.error { color: #ff8888; }
+
+    /* ── GAME SCREEN ── */
+    #gameScreen { gap: 14px; padding-bottom: 32px; }
+
+    .game-card {
+      background: var(--card); border: 1px solid rgba(212,184,0,.12);
+      border-top: 3px solid var(--yellow);
+      border-radius: var(--radius); padding: 22px 18px; text-align: center; margin-top: 6px;
+    }
+
+    .game-instr { font-size: .72rem; color: var(--muted); line-height: 1.7; margin-bottom: 16px; }
+
+    .timer-display {
+      font-family: 'Share Tech Mono', monospace; font-size: 3.6rem; font-weight: 400;
+      line-height: 1; letter-spacing: .06em; margin-bottom: 6px;
+      background: linear-gradient(180deg, #fff8e0, var(--yellow2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+
+    .target-row { font-size: .72rem; color: var(--muted); margin-bottom: 20px; }
+    .target-row span { color: var(--yellow2); font-weight: 700; }
+
+    .tap-btn {
+      width: 140px; height: 140px; border-radius: 50%; border: none;
+      background: radial-gradient(circle at 35% 35%, var(--red2), var(--red));
+      color: #fff8e0; font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 900;
+      letter-spacing: .06em; cursor: pointer;
+      box-shadow: 0 0 0 6px rgba(192,16,16,.2), 0 8px 32px rgba(192,16,16,.4);
+      transition: transform .06s;
+    }
+    .tap-btn:active { transform: scale(.93); }
+
+    .diff-row { font-size: .7rem; color: var(--muted); margin-top: 14px; min-height: 18px; }
+    .diff-row.win { color: var(--yellow2); font-weight: 700; }
+    .diff-row.lose { color: #ff8888; }
+
+    .tries-row { font-size: .65rem; color: var(--muted); margin-top: 6px; }
+
+    .result-btn {
+      width: 100%; padding: 14px; border: none; border-radius: var(--radius);
+      background: linear-gradient(135deg, var(--yellow2), #a08800);
+      color: #0a0800; font-family: 'Cinzel', serif; font-size: .95rem; font-weight: 900;
+      letter-spacing: .06em; cursor: pointer;
+      box-shadow: 0 6px 24px var(--yellow-glow);
+      display: none; margin-top: 14px; transition: transform .08s;
+    }
+    .result-btn:active { transform: scale(.97); }
+
+    /* ── SCRATCH SCREEN ── */
+    #scratchScreen { align-items: center; padding-bottom: 40px; }
+
+    .scratch-title {
+      font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 900;
+      text-align: center; margin: 16px 0 6px;
+      background: linear-gradient(180deg, #fff8e0, var(--yellow2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .scratch-sub { font-size: .72rem; color: var(--muted); text-align: center; margin-bottom: 18px; }
+
+    .scratch-wrap {
+      position: relative; width: 280px; height: 280px; border-radius: 20px;
+      overflow: hidden; cursor: crosshair;
+      box-shadow: 0 8px 40px rgba(212,184,0,.25), 0 0 0 2px rgba(212,184,0,.2);
+    }
+
+    .prize-reveal {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, #160e00, #2a1a00);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 10px; border-radius: 20px;
+    }
+    .prize-icon-big { font-size: 4rem; }
+    .prize-name-big {
+      font-family: 'Cinzel', serif; font-size: 1.05rem; font-weight: 900; text-align: center;
+      line-height: 1.3; padding: 0 16px;
+      background: linear-gradient(180deg, #fff8e0, var(--yellow2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .win-badge {
+      background: linear-gradient(135deg, var(--yellow2), var(--yellow));
+      color: #0a0800; font-size: .7rem; font-weight: 900;
+      padding: 4px 14px; border-radius: 20px; letter-spacing: .06em;
+    }
+
+    canvas.scratch-canvas { position: absolute; inset: 0; border-radius: 20px; touch-action: none; }
+
+    .claim-btn {
+      width: 100%; max-width: 280px; padding: 15px;
+      border: none; border-radius: var(--radius); margin-top: 20px;
+      background: linear-gradient(135deg, var(--yellow2), #a08800);
+      color: #0a0800; font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 900;
+      letter-spacing: .06em; cursor: pointer;
+      box-shadow: 0 6px 24px var(--yellow-glow);
+      display: none; transition: transform .08s;
+    }
+    .claim-btn:active { transform: scale(.97); }
+
+    .claim-note { font-size: .7rem; color: var(--muted); text-align: center; margin-top: 10px; max-width: 260px; line-height: 1.6; display: none; }
+
+    /* ── RESULT SCREEN ── */
+    #resultScreen { align-items: center; text-align: center; padding-bottom: 40px; }
+
+    .result-icon { font-size: 4rem; margin: 24px 0 12px; }
+    .result-title {
+      font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: 900; margin-bottom: 8px;
+      background: linear-gradient(180deg, #fff8e0, var(--yellow2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .result-msg { font-size: .8rem; color: var(--muted); line-height: 1.7; max-width: 280px; }
+
+    .fade-out { opacity: 0; transition: opacity .4s; }
+    .fade-in  { animation: fi .4s ease; }
+    @keyframes fi { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+  <div class="top-bar"></div>
+
+  <div class="header">
+    <div class="logo-wrap">
+      <img src="logo.png" alt="Jyoti Bindi" onerror="this.parentElement.innerHTML='🪔';" />
+    </div>
+    <h1>Jyoti Bindi</h1>
+    <div class="sub-brand">Ismail Group · Hyderabad</div>
+    <div class="address-pill">📍 Begum Bazar, Hyderabad-500012</div>
+  </div>
+
+  <!-- REGISTRATION -->
+  <div class="screen active" id="regScreen">
+    <div class="reg-card">
+      <div class="reg-title">Enter Your Details</div>
+      <div class="reg-desc">Fill in your info to start playing. Win the challenge and claim a gift from us!</div>
+      <label class="field-label">Full Name</label>
+      <input class="field-input" id="inp-name" type="text" placeholder="Your name" autocomplete="name" />
+      <label class="field-label">Phone Number</label>
+      <input class="field-input" id="inp-phone" type="tel" placeholder="10-digit number" autocomplete="tel" inputmode="numeric" />
+      <button class="submit-btn" id="submitBtn">Let's Play ▶</button>
+      <div class="submit-status" id="submitStatus"></div>
+    </div>
+  </div>
+
+  <!-- GAME -->
+  <div class="screen" id="gameScreen">
+    <div class="game-card">
+      <div class="game-instr">Stop the timer as close to the target as possible!<br>You have <strong style="color:var(--yellow2)">3 tries</strong> — best attempt counts.</div>
+      <div class="timer-display" id="timerDisplay">0.000</div>
+      <div class="target-row">Target: <span id="targetDisplay">–</span> seconds</div>
+      <button class="tap-btn" id="tapBtn">TAP!</button>
+      <div class="diff-row" id="diffRow"></div>
+      <div class="tries-row" id="triesRow"></div>
+      <button class="result-btn" id="resultBtn">Reveal My Prize 🎁</button>
+    </div>
+  </div>
+
+  <!-- SCRATCH -->
+  <div class="screen" id="scratchScreen">
+    <div class="scratch-title">Scratch & Win!</div>
+    <div class="scratch-sub">Use your finger to scratch the card</div>
+    <div class="scratch-wrap" id="scratchWrap">
+      <div class="prize-reveal" id="prizeReveal">
+        <div class="prize-icon-big" id="prizeIcon">🎁</div>
+        <div class="prize-name-big" id="prizeName">Loading…</div>
+        <div class="win-badge" id="winBadge" style="display:none">🎉 You Won!</div>
+      </div>
+      <canvas class="scratch-canvas" id="scratchCanvas"></canvas>
+    </div>
+    <button class="claim-btn" id="claimBtn">Claim My Gift! 🛍️</button>
+    <div class="claim-note" id="claimNote">Show this screen to our staff at the counter to collect your reward.</div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="screen" id="resultScreen">
+    <div class="result-icon" id="resultIcon">🎉</div>
+    <div class="result-title" id="resultTitle">Jyoti Bindi Champion!</div>
+    <div class="result-msg" id="resultMsg">Thank you for visiting Jyoti Bindi! Present this screen at the counter to collect your prize.</div>
+  </div>
+
+  <script>
+    const SHEET_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+    const LS_KEY    = 'jb_sheet_url';
+    const LOSER     = { icon: '😊', name: 'Better Luck\nNext Time!', winner: false };
+    const WINNER    = { icon: '🎫', name: '5% Discount\non Your Purchase!', winner: true };
+
+    const IS_TEST = new URLSearchParams(location.search).has('test');
+
+    let playerName='', playerPhone='';
+    let targetMs=0, startTime=0, rafId=null, running=false, tries=0, bestDiff=Infinity;
+    let currentPrize=null;
+
+    const regScreen    = document.getElementById('regScreen');
+    const gameScreen   = document.getElementById('gameScreen');
+    const scratchScreen= document.getElementById('scratchScreen');
+    const resultScreen = document.getElementById('resultScreen');
+    const submitBtn    = document.getElementById('submitBtn');
+    const submitStatus = document.getElementById('submitStatus');
+    const timerDisplay = document.getElementById('timerDisplay');
+    const targetDisplay= document.getElementById('targetDisplay');
+    const tapBtn       = document.getElementById('tapBtn');
+    const diffRow      = document.getElementById('diffRow');
+    const triesRow     = document.getElementById('triesRow');
+    const resultBtn    = document.getElementById('resultBtn');
+
+    function getSheetUrl() { return localStorage.getItem(LS_KEY) || SHEET_URL; }
+
+    // ── REGISTRATION ──
+    if (IS_TEST) switchToGame();
+
+    submitBtn.addEventListener('click', async () => {
+      const name  = document.getElementById('inp-name').value.trim();
+      const phone = document.getElementById('inp-phone').value.trim();
+      if (!name)                   { showStatus('Please enter your full name.', 'error'); return; }
+      if (!phone)                  { showStatus('Please enter your phone number.', 'error'); return; }
+      if (!/^\d{10}$/.test(phone)) { showStatus('Phone number must be exactly 10 digits.', 'error'); return; }
+      submitBtn.disabled = true; showStatus('Saving your details…', '');
+      playerName = name; playerPhone = phone;
+      try { await fetch(`${getSheetUrl()}?${new URLSearchParams({ action: 'register', name, phone })}`, { method: 'GET', mode: 'no-cors' }); } catch (_) {}
+      showStatus('', ''); switchToGame();
+    });
+
+    function showStatus(msg, type) { submitStatus.textContent = msg; submitStatus.className = 'submit-status ' + (type || ''); }
+
+    function switchToGame() {
+      regScreen.classList.add('fade-out');
+      setTimeout(() => { regScreen.classList.remove('active','fade-out'); gameScreen.classList.add('active','fade-in'); setTimeout(() => gameScreen.classList.remove('fade-in'), 500); init(); }, 450);
+    }
+
+    // ── GAME ──
+    function init() {
+      targetMs = (1500 + Math.random() * 2000) | 0;
+      targetDisplay.textContent = (targetMs / 1000).toFixed(3);
+      tries = 0; bestDiff = Infinity; running = false;
+      timerDisplay.textContent = '0.000';
+      diffRow.textContent = ''; diffRow.className = 'diff-row';
+      triesRow.textContent = '';
+      resultBtn.style.display = 'none';
+      tapBtn.textContent = 'TAP!'; tapBtn.disabled = false;
+    }
+
+    tapBtn.addEventListener('click', () => {
+      if (!running) {
+        running = true; startTime = performance.now();
+        tapBtn.textContent = 'STOP!';
+        (function tick() { if (!running) return; timerDisplay.textContent = ((performance.now() - startTime) / 1000).toFixed(3); rafId = requestAnimationFrame(tick); })();
+      } else {
+        running = false; cancelAnimationFrame(rafId);
+        const elapsed = performance.now() - startTime;
+        const diff = Math.abs(elapsed - targetMs);
+        tries++;
+        if (diff < bestDiff) bestDiff = diff;
+        const won = bestDiff < 200;
+        diffRow.textContent = `Difference: ${(diff / 1000).toFixed(3)}s ${diff < 200 ? '🎯' : diff < 400 ? '🔥' : ''}`;
+        diffRow.className = 'diff-row ' + (diff < 200 ? 'win' : 'lose');
+        triesRow.textContent = `Attempt ${tries} / 3`;
+        if (tries >= 3) { tapBtn.disabled = true; tapBtn.textContent = 'Done!'; resultBtn.style.display = 'block'; }
+        else { setTimeout(() => { running = false; startTime = 0; timerDisplay.textContent = '0.000'; tapBtn.textContent = 'TAP!'; }, 800); }
+      }
+    });
+
+    resultBtn.addEventListener('click', async () => {
+      const won = bestDiff < 200;
+      let prize = won ? await pickPrize() : LOSER;
+      currentPrize = prize;
+      showScratch(prize, won);
+    });
+
+    async function pickPrize() {
+      const url = getSheetUrl();
+      if (!url || url === 'YOUR_APPS_SCRIPT_URL_HERE') return WINNER;
+      try {
+        const res = await fetch(`${url}?action=getPrizes`);
+        const data = await res.json();
+        if (data.prizes && data.prizes.length) {
+          return WINNER;
+        }
+      } catch (_) {}
+      return { icon: '🎁', name: 'Free Gift\nFrom Us!', winner: true };
+    }
+
+    // ── SCRATCH ──
+    function showScratch(prize, won) {
+      gameScreen.classList.remove('active');
+      scratchScreen.classList.add('active','fade-in');
+      setTimeout(() => scratchScreen.classList.remove('fade-in'), 500);
+
+      document.getElementById('prizeIcon').textContent = prize.icon;
+      document.getElementById('prizeName').textContent = prize.name.replace(/\\n/g, '\n');
+      const badge = document.getElementById('winBadge');
+      badge.style.display = prize.winner ? 'inline-block' : 'none';
+
+      const wrap = document.getElementById('scratchWrap');
+      const canvas = document.getElementById('scratchCanvas');
+      canvas.width  = wrap.offsetWidth  || 280;
+      canvas.height = wrap.offsetHeight || 280;
+      const ctx = canvas.getContext('2d');
+
+      const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+      grad.addColorStop(0, '#d4b800');
+      grad.addColorStop(0.5, '#f0d400');
+      grad.addColorStop(1, '#c01010');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = '#0a0800cc';
+      ctx.font = 'bold 13px Raleway, sans-serif';
+      ctx.textAlign = 'center';
+      for (let y = 40; y < canvas.height; y += 38) {
+        ctx.fillText('✦ SCRATCH HERE ✦', canvas.width / 2, y);
+      }
+
+      // Draw "JB" in center
+      ctx.font = 'bold 64px Cinzel, serif';
+      ctx.fillStyle = 'rgba(10,8,0,0.18)';
+      ctx.fillText('JB', canvas.width / 2, canvas.height / 2 + 22);
+
+      let scratched = false, revealShown = false;
+
+      function getPos(e) {
+        const r = canvas.getBoundingClientRect();
+        const src = e.touches ? e.touches[0] : e;
+        return [src.clientX - r.left, src.clientY - r.top];
+      }
+
+      function scratch(e) {
+        e.preventDefault(); scratched = true;
+        const [x, y] = getPos(e);
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.beginPath(); ctx.arc(x, y, 26, 0, Math.PI * 2); ctx.fill();
+        if (!revealShown) checkReveal();
+      }
+
+      function checkReveal() {
+        const d = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+        let t = 0, c = 0;
+        for (let i = 3; i < d.length; i += 4) { t++; if (d[i] < 128) c++; }
+        if (c / t > 0.45) { revealShown = true; autoReveal(); }
+      }
+
+      function autoReveal() {
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        if (prize.winner) {
+          document.getElementById('claimBtn').style.display = 'block';
+          document.getElementById('claimNote').style.display = 'block';
+        }
+      }
+
+      canvas.addEventListener('mousedown', e => { canvas.addEventListener('mousemove', scratch); scratch(e); });
+      canvas.addEventListener('mouseup',   () => canvas.removeEventListener('mousemove', scratch));
+      canvas.addEventListener('touchstart', scratch, { passive: false });
+      canvas.addEventListener('touchmove',  scratch, { passive: false });
+    }
+
+    document.getElementById('claimBtn').addEventListener('click', () => {
+      scratchScreen.classList.remove('active');
+      resultScreen.classList.add('active', 'fade-in');
+      setTimeout(() => resultScreen.classList.remove('fade-in'), 500);
+      if (currentPrize && currentPrize.winner) {
+        document.getElementById('resultIcon').textContent = currentPrize.icon;
+        document.getElementById('resultTitle').textContent = 'Congratulations! 🎉';
+        document.getElementById('resultMsg').textContent = `You won: ${currentPrize.name.replace(/\\n/g, ' ')}! Show this screen to our staff at the counter to collect your reward. Thank you for visiting Jyoti Bindi!`;
+      } else {
+        document.getElementById('resultIcon').textContent = '😊';
+        document.getElementById('resultTitle').textContent = 'Thank You!';
+        document.getElementById('resultMsg').textContent = 'Better luck next time! Thank you for visiting Jyoti Bindi, Hyderabad.';
+      }
+    });
+  </script>
+</body>
+</html>
