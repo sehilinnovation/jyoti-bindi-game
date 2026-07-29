@@ -8,9 +8,9 @@
     @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Raleway:wght@400;600;700&family=Share+Tech+Mono&display=swap');
 
     :root {
-      --yellow: #d4b800;
-      --yellow2: #f0d400;
-      --yellow-glow: rgba(212,184,0,0.5);
+      --gold: #d4b800;
+      --gold2: #f0d400;
+      --gold-glow: rgba(212,184,0,0.45);
       --red: #c01010;
       --red2: #e02020;
       --bg: #0a0800;
@@ -18,302 +18,414 @@
       --border: #2a1e00;
       --text: #fff8e0;
       --muted: #8a7430;
+      --cream: #fff8e0;
       --green: #80ffb0;
-      --radius: 16px;
+      --radius: 14px;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background: var(--bg); color: var(--text);
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(ellipse at 20% 0%, rgba(192,16,16,0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 100%, rgba(212,184,0,0.05) 0%, transparent 50%);
+      color: var(--text);
       font-family: 'Raleway', sans-serif;
-      min-height: 100vh; min-height: 100dvh;
+      min-height: 100vh;
       display: flex; flex-direction: column; align-items: center;
-      padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0) env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
-      overflow-x: hidden;
+      padding: 0 16px calc(60px + env(safe-area-inset-bottom, 0px));
     }
 
-    .top-bar {
-      width: 100%; height: 4px;
-      background: linear-gradient(90deg, transparent, var(--red), var(--yellow2), var(--red), transparent);
-      box-shadow: 0 0 16px rgba(212,184,0,.5);
+    .top-stripe {
+      width: 100%; height: 5px;
+      background: linear-gradient(90deg, transparent, var(--red), var(--gold2), var(--red), transparent);
+      margin-bottom: 28px;
+      box-shadow: 0 0 16px rgba(212,184,0,0.3);
     }
 
-    /* ── HEADER ── */
-    .header {
-      width: 100%; max-width: 480px;
-      display: flex; flex-direction: column; align-items: center;
-      padding: 22px 20px 14px; text-align: center;
+    .logo-wrap { display: flex; flex-direction: column; align-items: center; margin-bottom: 4px; }
+
+    .logo-img {
+      width: 90px; height: 90px; object-fit: contain;
+      filter: drop-shadow(0 0 12px rgba(212,184,0,0.2));
     }
 
-    .logo-wrap {
+    .logo-fallback {
       width: 90px; height: 90px;
-      background: var(--yellow);
+      border: 2px solid var(--gold);
       border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 12px;
-      box-shadow: 0 0 0 3px rgba(212,184,0,.25), 0 8px 32px rgba(212,184,0,.3);
-      overflow: hidden;
+      background: var(--card);
+      display: flex; align-items: center; justify-content: center; font-size: 2.5rem;
     }
-    .logo-wrap img { width: 84px; height: 84px; object-fit: contain; }
 
-    h1 {
-      font-family: 'Cinzel', serif; font-size: 1.55rem; font-weight: 900;
-      letter-spacing: .06em; line-height: 1.1;
-      background: linear-gradient(180deg, #fff8e0 0%, var(--yellow2) 50%, var(--yellow) 100%);
+    .brand-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem; font-weight: 900; letter-spacing: 0.08em;
+      text-align: center; line-height: 1.2;
+      background: linear-gradient(180deg, #ffffff 0%, var(--gold2) 50%, var(--gold) 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-      margin-bottom: 3px;
+      margin-top: 10px;
     }
 
-    .sub-brand {
-      font-size: .62rem; color: rgba(212,184,0,.6); letter-spacing: .2em;
-      text-transform: uppercase; margin-bottom: 10px;
+    .brand-sub {
+      font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--gold); margin-top: 4px; margin-bottom: 6px; opacity: 0.75;
     }
 
-    .address-pill {
-      background: rgba(212,184,0,.08); border: 1px solid rgba(212,184,0,.18);
-      border-radius: 20px; padding: 5px 14px;
-      font-size: .65rem; color: var(--muted); letter-spacing: .04em;
+    .brand-address { margin-bottom: 22px; }
+    .brand-address span {
+      display: inline-block;
+      background: rgba(212,184,0,0.07); border: 1px solid rgba(212,184,0,0.2);
+      border-radius: 20px; padding: 3px 12px;
+      font-size: 0.66rem; color: var(--gold); font-weight: 600; letter-spacing: 0.03em;
     }
 
-    /* ── SCREENS ── */
-    .screen { width: 100%; max-width: 480px; padding: 0 16px; display: none; }
-    .screen.active { display: flex; flex-direction: column; }
-
-    /* ── REG SCREEN ── */
-    .reg-card {
-      background: var(--card); border: 1px solid rgba(212,184,0,.12);
-      border-top: 3px solid var(--yellow);
-      border-radius: var(--radius); padding: 28px 22px; margin-top: 10px;
-    }
-    .reg-title { font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }
-    .reg-desc  { font-size: .75rem; color: var(--muted); line-height: 1.6; margin-bottom: 22px; }
-
-    .field-label { font-size: .65rem; text-transform: uppercase; letter-spacing: .15em; color: var(--muted); margin-bottom: 7px; display: block; }
-    .field-input {
-      width: 100%; background: #0e0900; border: 1px solid var(--border);
-      border-radius: 10px; color: var(--text);
-      font-family: 'Raleway', sans-serif; font-size: 1rem; font-weight: 600;
-      padding: 13px 16px; outline: none; transition: border-color .2s; margin-bottom: 16px;
-    }
-    .field-input:focus { border-color: var(--yellow); }
-
-    .submit-btn {
-      width: 100%; padding: 16px; border: none; border-radius: var(--radius);
-      background: linear-gradient(135deg, var(--yellow2), #a08800);
-      color: #0a0800; font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 900;
-      letter-spacing: .06em; cursor: pointer; margin-top: 4px;
-      box-shadow: 0 6px 24px var(--yellow-glow); transition: transform .08s;
-    }
-    .submit-btn:active { transform: scale(.97); }
-    .submit-status { text-align: center; font-size: .78rem; margin-top: 10px; min-height: 18px; }
-    .submit-status.error { color: #ff8888; }
-
-    /* ── GAME SCREEN ── */
-    #gameScreen { gap: 14px; padding-bottom: 32px; }
-
-    .game-card {
-      background: var(--card); border: 1px solid rgba(212,184,0,.12);
-      border-top: 3px solid var(--yellow);
-      border-radius: var(--radius); padding: 22px 18px; text-align: center; margin-top: 6px;
+    .divider {
+      width: 100%; max-width: 480px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--red), var(--gold), transparent);
+      margin-bottom: 16px; opacity: 0.3;
     }
 
-    .game-instr { font-size: .72rem; color: var(--muted); line-height: 1.7; margin-bottom: 16px; }
+    .target-card {
+      width: 100%; max-width: 480px;
+      background: linear-gradient(135deg, #1e0e00, #160e00);
+      border: 1px solid rgba(212,184,0,0.15);
+      border-top: 3px solid var(--gold);
+      border-radius: var(--radius);
+      padding: 24px 24px 20px;
+      text-align: center; margin-bottom: 24px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+    }
+
+    .target-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); margin-bottom: 10px; }
+
+    .target-time {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 3.8rem; font-weight: 400; letter-spacing: 0.08em; line-height: 1;
+      color: var(--gold2); text-shadow: 0 0 18px var(--gold-glow);
+      margin-bottom: 10px;
+    }
+
+    .target-badges { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+
+    .badge {
+      background: rgba(212,184,0,0.07); border: 1px solid rgba(212,184,0,0.18);
+      border-radius: 100px; padding: 4px 12px;
+      font-size: 0.7rem; color: var(--cream); letter-spacing: 0.05em;
+    }
+    .badge.gold { border-color: var(--gold); color: var(--gold2); }
+
+    .tries-row {
+      width: 100%; max-width: 480px;
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 16px; font-size: 0.78rem; color: var(--muted);
+    }
+    .tries-row strong { color: var(--text); }
+
+    .timer-wrap {
+      width: 100%; max-width: 480px;
+      background: var(--card); border: 1px solid var(--border);
+      border-top: 3px solid var(--gold);
+      border-radius: var(--radius); padding: 28px 20px;
+      text-align: center; margin-bottom: 22px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.4);
+    }
+    .timer-wrap.running { border-color: var(--gold); box-shadow: 0 4px 30px rgba(212,184,0,0.12); }
 
     .timer-display {
-      font-family: 'Share Tech Mono', monospace; font-size: 3.6rem; font-weight: 400;
-      line-height: 1; letter-spacing: .06em; margin-bottom: 6px;
-      background: linear-gradient(180deg, #fff8e0, var(--yellow2));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 5.5rem; font-weight: 400; letter-spacing: 0.06em; line-height: 1;
+      color: var(--muted); font-variant-numeric: tabular-nums;
+      transition: color 0.15s;
     }
+    .timer-display.running { color: var(--cream); }
+    .timer-display.won     { color: var(--green); text-shadow: 0 0 24px rgba(128,255,176,0.4); }
+    .timer-display.lost    { color: var(--gold2); text-shadow: 0 0 20px var(--gold-glow); }
 
-    .target-row { font-size: .72rem; color: var(--muted); margin-bottom: 20px; }
-    .target-row span { color: var(--yellow2); font-weight: 700; }
+    .timer-sep { display: inline-block; color: var(--gold); opacity: 0.5; animation: blink 1s step-end infinite; }
+    @keyframes blink { 0%, 100% { opacity: .5 } 50% { opacity: .1 } }
+    .timer-display.running .timer-sep { animation: none; opacity: 0.8; }
 
-    .tap-btn {
-      width: 140px; height: 140px; border-radius: 50%; border: none;
-      background: radial-gradient(circle at 35% 35%, var(--red2), var(--red));
-      color: #fff8e0; font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 900;
-      letter-spacing: .06em; cursor: pointer;
-      box-shadow: 0 0 0 6px rgba(192,16,16,.2), 0 8px 32px rgba(192,16,16,.4);
-      transition: transform .06s;
+    .timer-unit { font-family: 'Raleway', sans-serif; font-size: 0.62rem; letter-spacing: 0.2em; color: var(--muted); margin-top: 6px; text-transform: uppercase; }
+
+    .btn-wrap { width: 100%; max-width: 480px; margin-bottom: 22px; }
+
+    #mainBtn {
+      width: 100%; padding: 20px; border: none; border-radius: var(--radius);
+      font-family: 'Cinzel', serif; font-size: 1.05rem; font-weight: 700;
+      letter-spacing: 0.08em; cursor: pointer;
+      transition: transform 0.08s; outline: none;
     }
-    .tap-btn:active { transform: scale(.93); }
-
-    .diff-row { font-size: .7rem; color: var(--muted); margin-top: 14px; min-height: 18px; }
-    .diff-row.win { color: var(--yellow2); font-weight: 700; }
-    .diff-row.lose { color: #ff8888; }
-
-    .tries-row { font-size: .65rem; color: var(--muted); margin-top: 6px; }
-
-    .result-btn {
-      width: 100%; padding: 14px; border: none; border-radius: var(--radius);
-      background: linear-gradient(135deg, var(--yellow2), #a08800);
-      color: #0a0800; font-family: 'Cinzel', serif; font-size: .95rem; font-weight: 900;
-      letter-spacing: .06em; cursor: pointer;
-      box-shadow: 0 6px 24px var(--yellow-glow);
-      display: none; margin-top: 14px; transition: transform .08s;
+    #mainBtn.state-start {
+      background: linear-gradient(135deg, var(--gold) 0%, #8a7800 100%);
+      color: #0a0800;
+      box-shadow: 0 6px 28px var(--gold-glow), inset 0 1px 0 rgba(255,255,255,0.15);
     }
-    .result-btn:active { transform: scale(.97); }
-
-    /* ── SCRATCH SCREEN ── */
-    #scratchScreen { align-items: center; padding-bottom: 40px; }
-
-    .scratch-title {
-      font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 900;
-      text-align: center; margin: 16px 0 6px;
-      background: linear-gradient(180deg, #fff8e0, var(--yellow2));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    #mainBtn.state-stop {
+      background: linear-gradient(135deg, var(--red2) 0%, var(--red) 100%);
+      color: #fff;
+      box-shadow: 0 6px 32px rgba(192,16,16,0.5);
+      animation: stopPulse 0.8s ease-in-out infinite;
     }
-    .scratch-sub { font-size: .72rem; color: var(--muted); text-align: center; margin-bottom: 18px; }
-
-    .scratch-wrap {
-      position: relative; width: 280px; height: 280px; border-radius: 20px;
-      overflow: hidden; cursor: crosshair;
-      box-shadow: 0 8px 40px rgba(212,184,0,.25), 0 0 0 2px rgba(212,184,0,.2);
+    @keyframes stopPulse {
+      0%, 100% { box-shadow: 0 4px 20px rgba(192,16,16,0.3); }
+      50%       { box-shadow: 0 6px 40px rgba(192,16,16,0.6); }
     }
+    #mainBtn:active { transform: scale(0.975); }
+    #mainBtn:disabled { background: var(--border); color: var(--muted); box-shadow: none; cursor: default; animation: none; }
 
-    .prize-reveal {
-      position: absolute; inset: 0;
-      background: linear-gradient(135deg, #160e00, #2a1a00);
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 10px; border-radius: 20px;
+    .result-card {
+      width: 100%; max-width: 480px; border-radius: var(--radius);
+      padding: 26px 24px; margin-bottom: 22px; text-align: center;
+      display: none; animation: slideUp 0.3s ease;
     }
-    .prize-icon-big { font-size: 4rem; }
-    .prize-name-big {
-      font-family: 'Cinzel', serif; font-size: 1.05rem; font-weight: 900; text-align: center;
-      line-height: 1.3; padding: 0 16px;
-      background: linear-gradient(180deg, #fff8e0, var(--yellow2));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    }
-    .win-badge {
-      background: linear-gradient(135deg, var(--yellow2), var(--yellow));
-      color: #0a0800; font-size: .7rem; font-weight: 900;
-      padding: 4px 14px; border-radius: 20px; letter-spacing: .06em;
-    }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
 
-    canvas.scratch-canvas { position: absolute; inset: 0; border-radius: 20px; touch-action: none; }
+    .result-card.win  { background: linear-gradient(135deg, #081a10, #0c2018); border: 1px solid #1a6040; border-top: 3px solid var(--green); display: block; }
+    .result-card.lose { background: linear-gradient(135deg, #160e00, #1e1400); border: 1px solid rgba(212,184,0,0.15); border-top: 3px solid var(--gold); display: block; }
 
-    .claim-btn {
-      width: 100%; max-width: 280px; padding: 15px;
-      border: none; border-radius: var(--radius); margin-top: 20px;
-      background: linear-gradient(135deg, var(--yellow2), #a08800);
-      color: #0a0800; font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 900;
-      letter-spacing: .06em; cursor: pointer;
-      box-shadow: 0 6px 24px var(--yellow-glow);
-      display: none; transition: transform .08s;
-    }
-    .claim-btn:active { transform: scale(.97); }
+    .result-icon  { font-size: 2.8rem; margin-bottom: 8px; }
+    .result-title { font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: 700; letter-spacing: 0.04em; margin-bottom: 8px; }
+    .result-card.win  .result-title { color: var(--green); }
+    .result-card.lose .result-title { color: var(--gold2); }
 
-    .claim-note { font-size: .7rem; color: var(--muted); text-align: center; margin-top: 10px; max-width: 260px; line-height: 1.6; display: none; }
+    .result-sub { font-size: 0.9rem; color: var(--muted); line-height: 1.6; margin-bottom: 18px; }
+    .result-sub strong { color: var(--text); }
 
-    /* ── RESULT SCREEN ── */
-    #resultScreen { align-items: center; text-align: center; padding-bottom: 40px; }
+    .accuracy-label { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); text-align: left; margin-bottom: 6px; }
+    .diff-bar-track { background: var(--border); border-radius: 100px; height: 8px; margin-bottom: 6px; overflow: hidden; }
+    .diff-bar { height: 100%; border-radius: 100px; transition: width 0.7s cubic-bezier(.22,.68,0,1.2); width: 0%; }
+    .result-card.win  .diff-bar { background: linear-gradient(90deg, #1a8a50, var(--green)); }
+    .result-card.lose .diff-bar { background: linear-gradient(90deg, var(--red), var(--gold2)); }
 
-    .result-icon { font-size: 4rem; margin: 24px 0 12px; }
-    .result-title {
-      font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: 900; margin-bottom: 8px;
-      background: linear-gradient(180deg, #fff8e0, var(--yellow2));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    }
-    .result-msg { font-size: .8rem; color: var(--muted); line-height: 1.7; max-width: 280px; }
+    .diff-note { font-size: 0.7rem; color: var(--muted); text-align: right; margin-bottom: 20px; }
 
-    .fade-out { opacity: 0; transition: opacity .4s; }
-    .fade-in  { animation: fi .4s ease; }
-    @keyframes fi { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .auto-reset-wrap { margin-top: 4px; }
+    .auto-reset-bar { height: 3px; background: var(--gold); border-radius: 100px; width: 100%; transform-origin: left; animation: none; }
+    .auto-reset-bar.running { animation: shrink 3s linear forwards; }
+    @keyframes shrink { from { width: 100%; } to { width: 0%; } }
+    .auto-reset-label { font-size: 0.66rem; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 6px; }
+
+    .history-wrap { width: 100%; max-width: 480px; }
+    .section-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .section-head-line { flex: 1; height: 1px; background: var(--border); }
+    .section-head-text { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); white-space: nowrap; }
+
+    .history-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .history-item { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 11px 16px; display: flex; align-items: center; justify-content: space-between; font-size: 0.82rem; animation: slideUp 0.3s ease; }
+    .history-item .h-num  { color: var(--muted); width: 22px; flex-shrink: 0; }
+    .history-item .h-time { font-variant-numeric: tabular-nums; color: var(--text); font-weight: 600; flex: 1; padding-left: 8px; }
+    .history-item .h-diff { color: var(--muted); font-size: 0.78rem; }
+    .history-item .h-res  { font-weight: 700; letter-spacing: 0.05em; margin-left: 12px; min-width: 44px; text-align: right; }
+    .history-item.h-win  .h-res { color: var(--green); }
+    .history-item.h-lose .h-res { color: var(--gold2); }
+
+    #confetti { position: fixed; inset: 0; pointer-events: none; z-index: 999; }
+
+    footer { margin-top: 40px; font-size: 0.62rem; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; text-align: center; }
+
+    .screen { display: none; width: 100%; }
+    .screen.active { display: flex; flex-direction: column; align-items: center; }
+
+    .reg-card { width: 100%; max-width: 480px; background: var(--card); border: 1px solid rgba(212,184,0,0.12); border-top: 3px solid var(--gold); border-radius: var(--radius); padding: 28px 24px 24px; margin-bottom: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
+    .reg-title { font-family: 'Cinzel', serif; font-size: 1.2rem; font-weight: 700; letter-spacing: 0.04em; color: var(--cream); margin-bottom: 4px; }
+    .reg-sub { font-size: 0.76rem; color: var(--muted); margin-bottom: 22px; line-height: 1.5; }
+
+    .form-group { margin-bottom: 16px; }
+    .form-label { display: block; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); margin-bottom: 7px; }
+
+    .form-input { width: 100%; background: #0e0900; border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-family: 'Raleway', sans-serif; font-size: 1rem; font-weight: 600; padding: 13px 16px; outline: none; transition: border-color 0.2s; -webkit-appearance: none; appearance: none; }
+    .form-input:focus    { border-color: var(--gold); }
+    .form-input::placeholder { color: var(--border); }
+
+    .btn-submit { width: 100%; padding: 18px; border: none; border-radius: var(--radius); font-family: 'Cinzel', serif; font-size: 1.05rem; font-weight: 700; letter-spacing: 0.06em; cursor: pointer; background: linear-gradient(135deg, var(--gold), #8a7800); color: #0a0800; box-shadow: 0 6px 24px var(--gold-glow); margin-top: 8px; transition: transform 0.08s; }
+    .btn-submit:active   { transform: scale(0.97); }
+    .btn-submit:disabled { background: var(--border); color: var(--muted); box-shadow: none; cursor: default; }
+
+    .submit-status { text-align: center; font-size: 0.8rem; color: var(--muted); margin-top: 10px; min-height: 18px; }
+    .submit-status.error { color: #ff8888; }
+    .submit-status.ok    { color: var(--green); }
+
+    .fade-out { animation: fadeOut 0.5s ease forwards; }
+    .fade-in  { animation: fadeIn  0.5s ease forwards; }
+    @keyframes fadeOut { to   { opacity: 0; transform: translateY(-10px); } }
+    @keyframes fadeIn  { from { opacity: 0; transform: translateY(10px);  } }
+
+    .scratch-header { width: 100%; max-width: 480px; text-align: center; margin-bottom: 18px; }
+    .scratch-title { font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 700; color: var(--gold2); text-shadow: 0 0 20px var(--gold-glow); margin-bottom: 4px; }
+    .scratch-sub { font-size: 0.82rem; color: var(--muted); }
+
+    .cards-grid { width: 100%; max-width: 480px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 22px; }
+
+    .card-item { position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 3/2; cursor: pointer; background: var(--card); border: 1px solid var(--border); box-shadow: 0 4px 16px rgba(0,0,0,0.5); transition: transform 0.15s; }
+    .card-item:not(.scratched):hover { transform: scale(1.03); }
+    .card-item.scratched { cursor: default; }
+
+    .card-prize { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px; background: linear-gradient(135deg, #1e1200, #160e00); text-align: center; }
+    .card-prize.is-loser { background: linear-gradient(135deg, #100a00, #0c0800); }
+    .card-prize-icon  { font-size: 1.7rem; line-height: 1; margin-bottom: 3px; }
+    .card-prize-name  { font-family: 'Raleway', sans-serif; font-size: 0.68rem; font-weight: 700; color: var(--gold2); letter-spacing: 0.04em; line-height: 1.25; }
+    .card-prize.is-loser .card-prize-name { color: var(--muted); }
+    .card-prize.is-loser .card-prize-icon { opacity: 0.45; }
+
+    .card-num { position: absolute; top: 5px; left: 7px; font-family: 'Cinzel', serif; font-size: 0.55rem; color: var(--muted); pointer-events: none; z-index: 2; }
+
+    .card-canvas { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; border-radius: 12px; transition: opacity 0.35s; }
+    .card-canvas.fading { opacity: 0; }
+
+    .prize-banner { width: 100%; max-width: 480px; background: linear-gradient(135deg, #1e1200, #160e00); border: 1px solid rgba(212,184,0,0.3); border-top: 3px solid var(--gold); border-radius: var(--radius); padding: 20px 20px 16px; text-align: center; display: none; animation: slideUp 0.4s ease; margin-bottom: 20px; box-shadow: 0 4px 30px rgba(212,184,0,0.1); }
+    .prize-banner.visible { display: block; }
+    .prize-banner.is-loser { background: var(--card); border-color: var(--border); border-top-color: var(--muted); }
+
+    .prize-banner-label { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--gold); margin-bottom: 8px; }
+    .prize-banner-icon  { font-size: 3rem; line-height: 1; margin-bottom: 6px; }
+    .prize-banner-name  { font-family: 'Cinzel', serif; font-size: 1.3rem; font-weight: 700; color: var(--gold2); text-shadow: 0 0 16px var(--gold-glow); margin-bottom: 6px; }
+    .prize-banner.is-loser .prize-banner-name { color: var(--muted); font-size: 1rem; font-family: 'Raleway', sans-serif; }
+    .prize-banner.is-loser .prize-banner-icon { opacity: 0.45; }
+    .prize-banner-claim { font-size: 0.76rem; color: var(--muted); line-height: 1.5; }
+
+    #playAgainBtn { width: 100%; max-width: 480px; padding: 18px; border: none; border-radius: var(--radius); font-family: 'Cinzel', serif; font-size: 1.05rem; font-weight: 700; letter-spacing: 0.06em; cursor: pointer; background: linear-gradient(135deg, var(--gold), #8a7800); color: #0a0800; box-shadow: 0 6px 24px var(--gold-glow); margin-bottom: 20px; transition: transform 0.08s; display: none; }
+    #playAgainBtn:active  { transform: scale(0.97); }
+    #playAgainBtn.visible { display: block; }
   </style>
 </head>
+
 <body>
-  <div class="top-bar"></div>
+  <canvas id="confetti"></canvas>
 
-  <div class="header">
-    <div class="logo-wrap">
-      <img src="logo.png" alt="Jyoti Bindi" onerror="this.parentElement.innerHTML='🪔';" />
-    </div>
-    <h1>Jyoti Bindi</h1>
-    <div class="sub-brand">Ismail Group · Hyderabad</div>
-    <div class="address-pill">📍 Begum Bazar, Hyderabad-500012</div>
-  </div>
-
-  <!-- REGISTRATION -->
+  <!-- SCREEN 1 — REGISTRATION -->
   <div class="screen active" id="regScreen">
+    <div class="top-stripe"></div>
+    <div class="logo-wrap">
+      <img class="logo-img" src="logo.png" alt="Jyoti Bindi"
+        onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';" />
+      <div class="logo-fallback" id="logoFallback" style="display:none;">🪔</div>
+    </div>
+    <div class="brand-name">Jyoti Bindi</div>
+    <div class="brand-sub">Begum Bazar · Hyderabad</div>
+    <div class="brand-address"><span>📍 Begum Bazar, Hyderabad-500012</span></div>
+    <div class="divider"></div>
+
     <div class="reg-card">
       <div class="reg-title">Enter Your Details</div>
-      <div class="reg-desc">Fill in your info to start playing. Win the challenge and claim a gift from us!</div>
-      <label class="field-label">Full Name</label>
-      <input class="field-input" id="inp-name" type="text" placeholder="Your name" autocomplete="name" />
-      <label class="field-label">Phone Number</label>
-      <input class="field-input" id="inp-phone" type="tel" placeholder="10-digit number" autocomplete="tel" inputmode="numeric" />
-      <button class="submit-btn" id="submitBtn">Let's Play ▶</button>
+      <div class="reg-sub">Fill in your info to start playing. Win the challenge and claim a 5% discount!</div>
+      <div class="form-group">
+        <label class="form-label" for="inp-name">Full Name</label>
+        <input class="form-input" id="inp-name" type="text" placeholder="Your name" autocomplete="name" />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="inp-phone">Phone Number</label>
+        <input class="form-input" id="inp-phone" type="tel" placeholder="e.g. 9876543210"
+          autocomplete="tel" inputmode="numeric" maxlength="10" />
+      </div>
+      <button class="btn-submit" id="submitBtn">Let's Play ▶</button>
       <div class="submit-status" id="submitStatus"></div>
     </div>
+
+    <footer>Jyoti Bindi &mdash; Begum Bazar, Hyderabad</footer>
   </div>
 
-  <!-- GAME -->
+  <!-- SCREEN 2 — GAME -->
   <div class="screen" id="gameScreen">
-    <div class="game-card">
-      <div class="game-instr">Stop the timer as close to the target as possible!<br>You have <strong style="color:var(--yellow2)">3 tries</strong> — best attempt counts.</div>
-      <div class="timer-display" id="timerDisplay">0.000</div>
-      <div class="target-row">Target: <span id="targetDisplay">–</span> seconds</div>
-      <button class="tap-btn" id="tapBtn">TAP!</button>
-      <div class="diff-row" id="diffRow"></div>
-      <div class="tries-row" id="triesRow"></div>
-      <button class="result-btn" id="resultBtn">Reveal My Prize 🎁</button>
+    <div class="top-stripe"></div>
+    <div class="logo-wrap">
+      <img class="logo-img" src="logo.png" alt="Jyoti Bindi" onerror="this.style.display='none';" />
     </div>
-  </div>
+    <div class="brand-name">Jyoti Bindi</div>
+    <div class="brand-sub">Begum Bazar · Hyderabad</div>
+    <div class="brand-address"><span>📍 Begum Bazar, Hyderabad-500012</span></div>
+    <div class="divider"></div>
 
-  <!-- SCRATCH -->
-  <div class="screen" id="scratchScreen">
-    <div class="scratch-title">Scratch & Win!</div>
-    <div class="scratch-sub">Use your finger to scratch the card</div>
-    <div class="scratch-wrap" id="scratchWrap">
-      <div class="prize-reveal" id="prizeReveal">
-        <div class="prize-icon-big" id="prizeIcon">🎁</div>
-        <div class="prize-name-big" id="prizeName">Loading…</div>
-        <div class="win-badge" id="winBadge" style="display:none">🎉 You Won!</div>
+    <div class="target-card">
+      <div class="target-label">▶ Stop the timer at exactly</div>
+      <div class="target-time" id="targetDisplay">--:--</div>
+      <div class="target-badges">
+        <span class="badge">seconds : hundredths</span>
+        <span class="badge gold">Exact match to win</span>
       </div>
-      <canvas class="scratch-canvas" id="scratchCanvas"></canvas>
     </div>
-    <button class="claim-btn" id="claimBtn">Claim My Gift! 🛍️</button>
-    <div class="claim-note" id="claimNote">Show this screen to our staff at the counter to collect your reward.</div>
+
+    <div class="tries-row" style="max-width:480px;width:100%;">
+      <span>Attempts: <strong id="tryCount">0</strong></span>
+      <span id="bestLabel" style="display:none">Best: <strong id="bestVal">—</strong></span>
+    </div>
+
+    <div class="timer-wrap" id="timerWrap">
+      <div class="timer-display" id="timerDisplay">
+        <span id="timerSec">00</span><span class="timer-sep">:</span><span id="timerHun">00</span>
+      </div>
+      <div class="timer-unit">sec &nbsp;:&nbsp; 1/100s</div>
+    </div>
+
+    <div class="btn-wrap">
+      <button id="mainBtn" class="state-start">▶  Start Challenge</button>
+    </div>
+
+    <div class="result-card" id="resultCard">
+      <div class="result-icon" id="resultIcon"></div>
+      <div class="result-title" id="resultTitle"></div>
+      <div class="result-sub" id="resultSub"></div>
+      <div class="accuracy-label">Accuracy</div>
+      <div class="diff-bar-track"><div class="diff-bar" id="diffBar"></div></div>
+      <div class="diff-note" id="diffNote"></div>
+      <div class="auto-reset-wrap">
+        <div class="auto-reset-bar" id="autoResetBar"></div>
+        <div class="auto-reset-label" id="autoResetLabel">Resetting...</div>
+      </div>
+    </div>
+
+    <div class="history-wrap" id="historyWrap" style="display:none">
+      <div class="section-head">
+        <div class="section-head-line"></div>
+        <div class="section-head-text">Attempt History</div>
+        <div class="section-head-line"></div>
+      </div>
+      <ul class="history-list" id="historyList"></ul>
+    </div>
+
+    <footer>Jyoti Bindi &mdash; Begum Bazar, Hyderabad</footer>
   </div>
 
-  <!-- RESULT -->
-  <div class="screen" id="resultScreen">
-    <div class="result-icon" id="resultIcon">🎉</div>
-    <div class="result-title" id="resultTitle">Jyoti Bindi Champion!</div>
-    <div class="result-msg" id="resultMsg">Thank you for visiting Jyoti Bindi! Present this screen at the counter to collect your prize.</div>
+  <!-- SCREEN 3 — SCRATCH CARDS -->
+  <div class="screen" id="scratchScreen">
+    <div class="top-stripe"></div>
+    <div class="logo-wrap">
+      <img class="logo-img" src="logo.png" alt="Jyoti Bindi" onerror="this.style.display='none';" />
+    </div>
+    <div class="brand-name">Jyoti Bindi</div>
+    <div class="brand-sub">Jyoti Bindi Champion! 🏆</div>
+    <div class="brand-address"><span>📍 Begum Bazar, Hyderabad-500012</span></div>
+    <div class="divider"></div>
+
+    <div class="scratch-header">
+      <div class="scratch-title">🎉 Pick Your Prize!</div>
+      <div class="scratch-sub">Scratch any one card to reveal your gift</div>
+    </div>
+
+    <div class="cards-grid" id="cardsGrid"></div>
+
+    <div class="prize-banner" id="prizeBanner">
+      <div class="prize-banner-label">🎁 Your Prize</div>
+      <div class="prize-banner-icon" id="prizeBannerIcon"></div>
+      <div class="prize-banner-name" id="prizeBannerName"></div>
+      <div class="prize-banner-claim" id="prizeBannerClaim"></div>
+    </div>
+
+    <button id="playAgainBtn">▶ Play Again</button>
+
+    <footer>Jyoti Bindi &mdash; Begum Bazar, Hyderabad</footer>
   </div>
 
   <script>
     const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzCDqGhIKjSI4-oAkkZYqtI0Yg6rJOvph4zTNS0ksb8nX5jh4982YREQy72tc1MC16mdw/exec';
-    const LS_KEY    = 'jb_sheet_url';
-    const LOSER     = { icon: '😊', name: 'Better Luck\nNext Time!', winner: false };
-    const WINNER    = { icon: '🎫', name: '5% Discount\non Your Purchase!', winner: true };
-
-    const IS_TEST = new URLSearchParams(location.search).has('test');
-
-    let playerName='', playerPhone='';
-    let targetMs=0, startTime=0, rafId=null, running=false, tries=0, bestDiff=Infinity;
-    let currentPrize=null;
 
     const regScreen    = document.getElementById('regScreen');
     const gameScreen   = document.getElementById('gameScreen');
-    const scratchScreen= document.getElementById('scratchScreen');
-    const resultScreen = document.getElementById('resultScreen');
     const submitBtn    = document.getElementById('submitBtn');
     const submitStatus = document.getElementById('submitStatus');
-    const timerDisplay = document.getElementById('timerDisplay');
-    const targetDisplay= document.getElementById('targetDisplay');
-    const tapBtn       = document.getElementById('tapBtn');
-    const diffRow      = document.getElementById('diffRow');
-    const triesRow     = document.getElementById('triesRow');
-    const resultBtn    = document.getElementById('resultBtn');
-
-    function getSheetUrl() { return localStorage.getItem(LS_KEY) || SHEET_URL; }
-
-    // ── REGISTRATION ──
-    if (IS_TEST) switchToGame();
+    const IS_TEST      = new URLSearchParams(window.location.search).has('test');
+    if (IS_TEST) setTimeout(showScratchScreen, 200);
 
     submitBtn.addEventListener('click', async () => {
       const name  = document.getElementById('inp-name').value.trim();
@@ -322,8 +434,7 @@
       if (!phone)                  { showStatus('Please enter your phone number.', 'error'); return; }
       if (!/^\d{10}$/.test(phone)) { showStatus('Phone number must be exactly 10 digits.', 'error'); return; }
       submitBtn.disabled = true; showStatus('Saving your details…', '');
-      playerName = name; playerPhone = phone;
-      try { await fetch(`${getSheetUrl()}?${new URLSearchParams({ action: 'register', name, phone })}`, { method: 'GET', mode: 'no-cors' }); } catch (_) {}
+      try { await fetch(`${SHEET_URL}?${new URLSearchParams({ action: 'register', name, phone })}`, { method: 'GET', mode: 'no-cors' }); } catch (_) {}
       showStatus('', ''); switchToGame();
     });
 
@@ -334,146 +445,152 @@
       setTimeout(() => { regScreen.classList.remove('active','fade-out'); gameScreen.classList.add('active','fade-in'); setTimeout(() => gameScreen.classList.remove('fade-in'), 500); init(); }, 450);
     }
 
-    // ── GAME ──
-    function init() {
-      targetMs = (1500 + Math.random() * 2000) | 0;
-      targetDisplay.textContent = (targetMs / 1000).toFixed(3);
-      tries = 0; bestDiff = Infinity; running = false;
-      timerDisplay.textContent = '0.000';
-      diffRow.textContent = ''; diffRow.className = 'diff-row';
-      triesRow.textContent = '';
-      resultBtn.style.display = 'none';
-      tapBtn.textContent = 'TAP!'; tapBtn.disabled = false;
+    let targetMs=0, startTime=0, rafId=null, running=false, tries=0, bestDiff=Infinity;
+    const $=id=>document.getElementById(id);
+    const timerWrap=$('timerWrap'), timerDisplay=$('timerDisplay'), timerSec=$('timerSec'), timerHun=$('timerHun');
+    const mainBtn=$('mainBtn'), resultCard=$('resultCard'), resultIcon=$('resultIcon'), resultTitle=$('resultTitle'), resultSub=$('resultSub');
+    const diffBar=$('diffBar'), diffNote=$('diffNote'), autoResetBar=$('autoResetBar'), autoResetLabel=$('autoResetLabel');
+    const tryCount=$('tryCount'), bestLabel=$('bestLabel'), bestVal=$('bestVal'), historyWrap=$('historyWrap'), historyList=$('historyList'), targetDisplay=$('targetDisplay');
+
+    function init() { resetTimer(); }
+
+    function resetTimer() {
+      const secs=Math.floor(Math.random()*4)+3, hund=Math.floor(Math.random()*100);
+      targetMs=secs*1000+hund*10; targetDisplay.textContent=`${pad(secs)}:${pad(hund)}`;
+      running=false; if(rafId) cancelAnimationFrame(rafId);
+      timerSec.textContent='00'; timerHun.textContent='00';
+      timerDisplay.className='timer-display'; timerWrap.classList.remove('running');
+      mainBtn.textContent='▶  Start Challenge'; mainBtn.className='state-start'; mainBtn.disabled=false;
+      resultCard.className='result-card';
     }
 
-    tapBtn.addEventListener('click', () => {
-      if (!running) {
-        running = true; startTime = performance.now();
-        tapBtn.textContent = 'STOP!';
-        (function tick() { if (!running) return; timerDisplay.textContent = ((performance.now() - startTime) / 1000).toFixed(3); rafId = requestAnimationFrame(tick); })();
-      } else {
-        running = false; cancelAnimationFrame(rafId);
-        const elapsed = performance.now() - startTime;
-        const diff = Math.abs(elapsed - targetMs);
-        tries++;
-        if (diff < bestDiff) bestDiff = diff;
-        const won = bestDiff < 200;
-        diffRow.textContent = `Difference: ${(diff / 1000).toFixed(3)}s ${diff < 200 ? '🎯' : diff < 400 ? '🔥' : ''}`;
-        diffRow.className = 'diff-row ' + (diff < 200 ? 'win' : 'lose');
-        triesRow.textContent = `Attempt ${tries} / 3`;
-        if (tries >= 3) { tapBtn.disabled = true; tapBtn.textContent = 'Done!'; resultBtn.style.display = 'block'; }
-        else { setTimeout(() => { running = false; startTime = 0; timerDisplay.textContent = '0.000'; tapBtn.textContent = 'TAP!'; }, 800); }
-      }
-    });
+    function tick() { if(!running) return; const e=Date.now()-startTime; if(e>targetMs+6000){stop(e);return;} const h=Math.floor(e/10); timerSec.textContent=pad(Math.floor(h/100)); timerHun.textContent=pad(h%100); rafId=requestAnimationFrame(tick); }
 
-    resultBtn.addEventListener('click', async () => {
-      const won = bestDiff < 200;
-      let prize = won ? await pickPrize() : LOSER;
-      currentPrize = prize;
-      showScratch(prize, won);
-    });
+    function start() { running=true; startTime=Date.now(); timerDisplay.className='timer-display running'; timerWrap.classList.add('running'); mainBtn.textContent='⬛  STOP!'; mainBtn.className='state-stop'; playStart(); startTicking(); rafId=requestAnimationFrame(tick); }
 
-    async function pickPrize() {
-      const url = getSheetUrl();
-      if (!url || url === 'YOUR_APPS_SCRIPT_URL_HERE') return WINNER;
-      try {
-        const res = await fetch(`${url}?action=getPrizes`);
-        const data = await res.json();
-        if (data.prizes && data.prizes.length) {
-          return WINNER;
-        }
-      } catch (_) {}
-      return { icon: '🎁', name: 'Free Gift\nFrom Us!', winner: true };
+    function stop(forced) {
+      if(!running) return; running=false; cancelAnimationFrame(rafId);
+      const elapsed=(forced!==undefined)?forced:Date.now()-startTime;
+      const diff=Math.abs(elapsed-targetMs), won=Math.floor(elapsed/10)===Math.floor(targetMs/10);
+      tries++; tryCount.textContent=tries;
+      if(diff<bestDiff){bestDiff=diff; bestVal.textContent=diff+'ms'; bestLabel.style.display='';}
+      const h=Math.floor(elapsed/10); timerSec.textContent=pad(Math.floor(h/100)); timerHun.textContent=pad(h%100);
+      timerWrap.classList.remove('running'); timerDisplay.className='timer-display '+(won?'won':'lost');
+      mainBtn.disabled=true; mainBtn.className=''; mainBtn.textContent=won?'🏆 Winner!':'✕ Missed';
+      stopTicking(); playClick(); showResult(won,elapsed,diff); addHistory(won,elapsed,diff);
+      if(won){confetti(); setTimeout(playWin,80);} else setTimeout(playMiss,80);
     }
 
-    // ── SCRATCH ──
-    function showScratch(prize, won) {
-      gameScreen.classList.remove('active');
-      scratchScreen.classList.add('active','fade-in');
-      setTimeout(() => scratchScreen.classList.remove('fade-in'), 500);
+    mainBtn.addEventListener('click',()=>running?stop():start());
 
-      document.getElementById('prizeIcon').textContent = prize.icon;
-      document.getElementById('prizeName').textContent = prize.name.replace(/\\n/g, '\n');
-      const badge = document.getElementById('winBadge');
-      badge.style.display = prize.winner ? 'inline-block' : 'none';
-
-      const wrap = document.getElementById('scratchWrap');
-      const canvas = document.getElementById('scratchCanvas');
-      canvas.width  = wrap.offsetWidth  || 280;
-      canvas.height = wrap.offsetHeight || 280;
-      const ctx = canvas.getContext('2d');
-
-      const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-      grad.addColorStop(0, '#d4b800');
-      grad.addColorStop(0.5, '#f0d400');
-      grad.addColorStop(1, '#c01010');
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      ctx.fillStyle = '#0a0800cc';
-      ctx.font = 'bold 13px Raleway, sans-serif';
-      ctx.textAlign = 'center';
-      for (let y = 40; y < canvas.height; y += 38) {
-        ctx.fillText('✦ SCRATCH HERE ✦', canvas.width / 2, y);
-      }
-
-      // Draw "JB" in center
-      ctx.font = 'bold 64px Cinzel, serif';
-      ctx.fillStyle = 'rgba(10,8,0,0.18)';
-      ctx.fillText('JB', canvas.width / 2, canvas.height / 2 + 22);
-
-      let scratched = false, revealShown = false;
-
-      function getPos(e) {
-        const r = canvas.getBoundingClientRect();
-        const src = e.touches ? e.touches[0] : e;
-        return [src.clientX - r.left, src.clientY - r.top];
-      }
-
-      function scratch(e) {
-        e.preventDefault(); scratched = true;
-        const [x, y] = getPos(e);
-        ctx.globalCompositeOperation = 'destination-out';
-        ctx.beginPath(); ctx.arc(x, y, 26, 0, Math.PI * 2); ctx.fill();
-        if (!revealShown) checkReveal();
-      }
-
-      function checkReveal() {
-        const d = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-        let t = 0, c = 0;
-        for (let i = 3; i < d.length; i += 4) { t++; if (d[i] < 128) c++; }
-        if (c / t > 0.45) { revealShown = true; autoReveal(); }
-      }
-
-      function autoReveal() {
-        ctx.globalCompositeOperation = 'destination-out';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        if (prize.winner) {
-          document.getElementById('claimBtn').style.display = 'block';
-          document.getElementById('claimNote').style.display = 'block';
-        }
-      }
-
-      canvas.addEventListener('mousedown', e => { canvas.addEventListener('mousemove', scratch); scratch(e); });
-      canvas.addEventListener('mouseup',   () => canvas.removeEventListener('mousemove', scratch));
-      canvas.addEventListener('touchstart', scratch, { passive: false });
-      canvas.addEventListener('touchmove',  scratch, { passive: false });
+    function showResult(won,elapsed,diff) {
+      resultCard.className='result-card '+(won?'win':'lose');
+      resultIcon.textContent=won?'🏆':'🪔'; resultTitle.textContent=won?'Jyoti Bindi Champion!':'Not Quite!';
+      const at=msToLabel(elapsed), dir=elapsed>targetMs?'over':'under';
+      resultSub.innerHTML=won?`You stopped at <strong>${at}</strong> — only <strong>${diff}ms</strong> off!`:`You stopped at <strong>${at}</strong><br>You were <strong>${diff}ms ${dir}</strong> the target. Try again!`;
+      setTimeout(()=>{diffBar.style.width=(won?100:Math.max(0,100-diff/5)).toFixed(1)+'%';},60);
+      diffNote.textContent=won?'✓ Exact match!':`${diff}ms off — try again!`;
+      const delay=won?2000:2500;
+      autoResetLabel.textContent=won?'Scratch card loading…':`Restarting in 2.5s…`;
+      autoResetBar.classList.remove('running'); autoResetBar.style.animationDuration=(delay/1000)+'s';
+      void autoResetBar.offsetWidth; autoResetBar.classList.add('running');
+      setTimeout(won?showScratchScreen:resetTimer, delay);
     }
 
-    document.getElementById('claimBtn').addEventListener('click', () => {
-      scratchScreen.classList.remove('active');
-      resultScreen.classList.add('active', 'fade-in');
-      setTimeout(() => resultScreen.classList.remove('fade-in'), 500);
-      if (currentPrize && currentPrize.winner) {
-        document.getElementById('resultIcon').textContent = currentPrize.icon;
-        document.getElementById('resultTitle').textContent = 'Congratulations! 🎉';
-        document.getElementById('resultMsg').textContent = `You won: ${currentPrize.name.replace(/\\n/g, ' ')}! Show this screen to our staff at the counter to collect your reward. Thank you for visiting Jyoti Bindi!`;
-      } else {
-        document.getElementById('resultIcon').textContent = '😊';
-        document.getElementById('resultTitle').textContent = 'Thank You!';
-        document.getElementById('resultMsg').textContent = 'Better luck next time! Thank you for visiting Jyoti Bindi, Hyderabad.';
-      }
+    function addHistory(won,elapsed,diff) {
+      historyWrap.style.display='block';
+      const li=document.createElement('li'); li.className='history-item '+(won?'h-win':'h-lose');
+      li.innerHTML=`<span class="h-num">#${tries}</span><span class="h-time">${msToLabel(elapsed)}</span><span class="h-diff">${diff}ms off</span><span class="h-res">${won?'✓ WIN':'✗ Miss'}</span>`;
+      historyList.prepend(li);
+    }
+
+    function msToLabel(ms){const h=Math.floor(ms/10);return `${pad(Math.floor(h/100))}:${pad(h%100)}`;}
+    function pad(n){return String(n).padStart(2,'0');}
+
+    let audioCtx=null,tickTimer=null;
+    function getCtx(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();return audioCtx;}
+    function playTick(){const ctx=getCtx(),osc=ctx.createOscillator(),gain=ctx.createGain();osc.connect(gain);gain.connect(ctx.destination);osc.type='sine';osc.frequency.setValueAtTime(1200,ctx.currentTime);gain.gain.setValueAtTime(0.08,ctx.currentTime);gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.04);osc.start(ctx.currentTime);osc.stop(ctx.currentTime+0.05);}
+    function startTicking(){stopTicking();function s(){if(!running)return;playTick();const r=targetMs-(Date.now()-startTime);tickTimer=setTimeout(s,r<1000?150:r<3000?400:1000);}s();}
+    function stopTicking(){if(tickTimer){clearTimeout(tickTimer);tickTimer=null;}}
+    function playStart(){const ctx=getCtx(),t=ctx.currentTime,osc=ctx.createOscillator(),gain=ctx.createGain();osc.connect(gain);gain.connect(ctx.destination);osc.type='square';osc.frequency.setValueAtTime(220,t);osc.frequency.exponentialRampToValueAtTime(880,t+0.3);gain.gain.setValueAtTime(0.2,t);gain.gain.exponentialRampToValueAtTime(0.001,t+0.5);osc.start(t);osc.stop(t+0.55);}
+    function playClick(){const ctx=getCtx(),osc=ctx.createOscillator(),gain=ctx.createGain();osc.connect(gain);gain.connect(ctx.destination);osc.type='square';osc.frequency.setValueAtTime(800,ctx.currentTime);osc.frequency.exponentialRampToValueAtTime(100,ctx.currentTime+0.08);gain.gain.setValueAtTime(0.3,ctx.currentTime);gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.1);osc.start(ctx.currentTime);osc.stop(ctx.currentTime+0.12);}
+    function playWin(){const ctx=getCtx();[523,659,784,1047].forEach((f,i)=>{const osc=ctx.createOscillator(),gain=ctx.createGain();osc.connect(gain);gain.connect(ctx.destination);osc.type='square';osc.frequency.setValueAtTime(f,ctx.currentTime+i*0.12);gain.gain.setValueAtTime(0.25,ctx.currentTime+i*0.12);gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+i*0.12+0.3);osc.start(ctx.currentTime+i*0.12);osc.stop(ctx.currentTime+i*0.12+0.35);});}
+    function playMiss(){const ctx=getCtx(),osc=ctx.createOscillator(),gain=ctx.createGain();osc.connect(gain);gain.connect(ctx.destination);osc.type='sawtooth';osc.frequency.setValueAtTime(400,ctx.currentTime);osc.frequency.linearRampToValueAtTime(100,ctx.currentTime+0.35);gain.gain.setValueAtTime(0.2,ctx.currentTime);gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.4);osc.start(ctx.currentTime);osc.stop(ctx.currentTime+0.42);}
+
+    function confetti(){const cv=$('confetti'),ctx=cv.getContext('2d');cv.width=window.innerWidth;cv.height=window.innerHeight;const pal=['#d4b800','#f0d400','#c01010','#ffffff','#fff8e0','#8a7800'];const pieces=Array.from({length:140},()=>({x:Math.random()*cv.width,y:Math.random()*-cv.height*.5-10,w:Math.random()*10+4,h:Math.random()*5+3,color:pal[Math.floor(Math.random()*pal.length)],angle:Math.random()*Math.PI*2,spin:(Math.random()-.5)*.18,vx:(Math.random()-.5)*3.5,vy:Math.random()*4+2}));function draw(){ctx.clearRect(0,0,cv.width,cv.height);let any=false;pieces.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.angle+=p.spin;if(p.y<cv.height+20)any=true;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.angle);ctx.fillStyle=p.color;ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore();});if(any)requestAnimationFrame(draw);else ctx.clearRect(0,0,cv.width,cv.height);}draw();}
+
+    const DEFAULT_PRIZES=[
+      {icon:'🎫',name:'5% Discount'},{icon:'🎫',name:'5% Discount'},
+      {icon:'🎫',name:'5% Discount'},{icon:'😔',name:'Better Luck\nNext Time',winner:false},
+    ];
+
+    async function loadPrizes(){
+      const LOSER={icon:'😔',name:'Better Luck\nNext Time',winner:false,row:null};
+      const WIN  ={icon:'🎫',name:'5% Discount',winner:true,row:null};
+      if(IS_TEST) return [WIN,WIN,WIN,LOSER].sort(()=>Math.random()-.5);
+      return [WIN,WIN,WIN,LOSER].sort(()=>Math.random()-.5);
+    }
+
+    let scratchDone=false;
+
+    function showScratchScreen(){
+      const g=$('gameScreen'),s=$('scratchScreen');g.classList.add('fade-out');
+      setTimeout(async()=>{g.classList.remove('active','fade-out');s.classList.add('active','fade-in');setTimeout(()=>s.classList.remove('fade-in'),500);await buildCards();},450);
+    }
+
+    async function buildCards(){
+      const grid=$('cardsGrid');grid.innerHTML='';scratchDone=false;
+      $('prizeBanner').className='prize-banner';$('playAgainBtn').className='';
+      const prizes=await loadPrizes();
+      prizes.forEach((prize,i)=>{
+        const item=document.createElement('div');item.className='card-item';
+        const pd=document.createElement('div');pd.className='card-prize'+(prize.winner===false?' is-loser':'');
+        pd.innerHTML=`<div class="card-prize-icon">${prize.icon}</div><div class="card-prize-name">${prize.name.replace('\n','<br>')}</div>`;
+        const nd=document.createElement('div');nd.className='card-num';nd.textContent='#'+(i+1);
+        const canvas=document.createElement('canvas');canvas.className='card-canvas';
+        item.appendChild(pd);item.appendChild(nd);item.appendChild(canvas);grid.appendChild(item);
+        setTimeout(()=>initCardCanvas(canvas,item,prize),80);
+      });
+    }
+
+    function initCardCanvas(canvas,item,prize){
+      const w=item.offsetWidth||150,h=item.offsetHeight||100;canvas.width=w;canvas.height=h;
+      const ctx=canvas.getContext('2d');
+      const g=ctx.createLinearGradient(0,0,w,h);g.addColorStop(0,'#2a1c00');g.addColorStop(.4,'#1e1400');g.addColorStop(1,'#160e00');
+      ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
+      ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillStyle='rgba(212,184,0,0.35)';ctx.font=`bold ${Math.floor(h*.28)}px Cinzel,serif`;ctx.fillText('JB',w/2,h/2-6);
+      ctx.font=`${Math.floor(h*.11)}px Raleway,sans-serif`;ctx.fillStyle='rgba(212,184,0,0.22)';ctx.fillText('SCRATCH HERE',w/2,h-11);
+      let active=false,lx=0,ly=0;
+      function xy(e){const r=canvas.getBoundingClientRect(),s=e.touches?e.touches[0]:e;return{x:(s.clientX-r.left)*(w/r.width),y:(s.clientY-r.top)*(h/r.height)};}
+      function doScratch(e){if(!active||scratchDone)return;e.preventDefault();const p=xy(e);ctx.globalCompositeOperation='destination-out';ctx.lineWidth=w*.30;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(p.x,p.y);ctx.stroke();ctx.beginPath();ctx.arc(p.x,p.y,w*.15,0,Math.PI*2);ctx.fill();lx=p.x;ly=p.y;checkThreshold(canvas,item,prize);}
+      function begin(e){if(scratchDone)return;active=true;const p=xy(e);lx=p.x;ly=p.y;doScratch(e);}
+      canvas.addEventListener('mousedown',begin);canvas.addEventListener('mousemove',doScratch);canvas.addEventListener('mouseup',()=>{active=false;});
+      canvas.addEventListener('touchstart',begin,{passive:false});canvas.addEventListener('touchmove',doScratch,{passive:false});canvas.addEventListener('touchend',()=>{active=false;});
+    }
+
+    function checkThreshold(canvas,item,prize){
+      const ctx=canvas.getContext('2d'),data=ctx.getImageData(0,0,canvas.width,canvas.height).data;let cleared=0;
+      for(let i=3;i<data.length;i+=4)if(data[i]<128)cleared++;
+      if(cleared/(canvas.width*canvas.height)>.38)revealChosenCard(item,canvas,prize);
+    }
+
+    async function revealChosenCard(item,canvas,prize){
+      if(scratchDone)return;scratchDone=true;canvas.classList.add('fading');setTimeout(()=>{canvas.style.display='none';},380);item.classList.add('scratched');
+      $('prizeBannerIcon').textContent=prize.icon;$('prizeBannerName').textContent=prize.name.replace('\n',' ');
+      $('prizeBannerClaim').textContent=prize.winner!==false?'Show this screen to our staff at the counter to get 5% off your purchase! One per visit.':'Better luck next time! Come back on your next visit.';
+      $('prizeBanner').className='prize-banner visible'+(prize.winner===false?' is-loser':'');
+      const others=Array.from($('cardsGrid').querySelectorAll('.card-item')).filter(el=>el!==item);
+      others.forEach((el,idx)=>{setTimeout(()=>{const c=el.querySelector('.card-canvas');if(c){c.classList.add('fading');setTimeout(()=>{c.style.display='none';},370);}el.classList.add('scratched');},200+idx*110);});
+      setTimeout(()=>{$('playAgainBtn').className='visible';},200+others.length*110+500);
+    }
+
+    $('playAgainBtn').addEventListener('click',()=>{
+      const s=$('scratchScreen'),g=$('gameScreen');s.classList.add('fade-out');
+      setTimeout(()=>{s.classList.remove('active','fade-out');g.classList.add('active','fade-in');setTimeout(()=>g.classList.remove('fade-in'),500);resetTimer();},450);
     });
+
+    init();
   </script>
 </body>
 </html>
